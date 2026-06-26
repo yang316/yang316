@@ -1,11 +1,6 @@
 ### Hi there 👋
 
-```php
-<?php
-// 我是一名 PHP 开发者
-echo "热爱代码，热爱开源";
-?>
-```
+<!-- HITOKOTO -->「世界上最快乐的事，莫过于为理想而奋斗。」—— 苏格拉底<!-- /HITOKOTO -->
 
 ---
 
@@ -19,9 +14,9 @@ echo "热爱代码，热爱开源";
 #### 🐍 贡献蛇图
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/yang316/yang316/output/github-contribution-grid-snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/yang316/yang316/output/github-contribution-grid-snake.svg" />
-  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/yang316/yang316/output/github-contribution-grid-snake-dark.svg" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/yang316/yang316/main/dist/github-contribution-grid-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/yang316/yang316/main/dist/github-contribution-grid-snake-dark.svg" />
+  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/yang316/yang316/main/dist/github-contribution-grid-snake-dark.svg" />
 </picture>
 
 ---
