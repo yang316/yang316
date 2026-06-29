@@ -560,57 +560,89 @@
     <div class="step">
       <div class="step-header">
         <span class="step-num purple">1</span>
-        <span class="step-title">禅房画像推理</span>
+        <span class="step-title">禅房证据板 — 五幅画匹配</span>
         <span class="step-loc">禅房</span>
       </div>
-      <p>根据攻略提示完成三类画像匹配：</p>
+      <p>将证据放到五幅画前面的指定位置：</p>
       <table class="items-table">
-        <tr><th>画像类型</th><th>匹配道具</th></tr>
-        <tr><td>容疑者画像</td><td>梳子</td></tr>
-        <tr><td>动机画像</td><td>金币</td></tr>
-        <tr><td>场所画像</td><td>鱼=茶盏 / 山=马 / 鸟=毛笔</td></tr>
+        <tr><th>画像位置</th><th>道具</th><th>确定方法</th></tr>
+        <tr><td>第1幅</td><td>梳子 🪥</td><td>固定不变</td></tr>
+        <tr><td>第2幅</td><td>共犯者物品</td><td>园丁剪刀 / 商人算盘 / 高贵者帽子（由陷阱灵魂决定）</td></tr>
+        <tr><td>第3幅</td><td>毒物（见下方）</td><td>由共犯者 + 死因共同决定（见步骤2）</td></tr>
+        <tr><td>第4幅</td><td>地点物品</td><td>由画像背景图案决定（鱼=搅拌器 / 山=马 / 鸟=毛笔）</td></tr>
+        <tr><td>第5幅</td><td>金币徽章 🪙</td><td>固定不变（动机画像时钟获得）</td></tr>
       </table>
-      <p>同时阅读禅房内的剧情文档（羊皮纸卷轴），收集将军与家族矛盾的动机线索。</p>
     </div>
 
     <div class="step">
       <div class="step-header">
         <span class="step-num purple">2</span>
-        <span class="step-title">尸检记录与毒物匹配</span>
-        <span class="step-loc">右侧走廊 / 军议室</span>
+        <span class="step-title">确定第3幅画 — 毒物推理</span>
+        <span class="step-loc">查看墙上的医嘱和毒物表</span>
       </div>
-      <ul>
-        <li>查看「尸检记录」，提取中毒/瘫痪反应信息</li>
-        <li>前往军议室获取对应纸条</li>
-        <li>根据症状找到对应毒物，放在「毒」画像下方</li>
-      </ul>
+      <p>先看 <strong>医嘱</strong>（墙上左侧纸条）确认死因，再结合 <strong>共犯者</strong> 确定毒物：</p>
 
-      <p style="margin:10px 0 6px;font-weight:600;font-size:14px;">📋 症状 - 嫌疑人 - 毒物 对照表：</p>
       <table class="items-table">
-        <tr><th>症状</th><th>嫌疑人</th><th>毒物</th></tr>
-        <tr><td>🤮 呕吐</td><td>高贵的</td><td>鱼 🐡</td></tr>
-        <tr><td>🤮 呕吐</td><td>园丁</td><td>李子 🍑</td></tr>
-        <tr><td>🦴 瘫痪</td><td>商人</td><td>鱼 🐡</td></tr>
-        <tr><td>🦴 瘫痪</td><td>园丁</td><td>花 🌸</td></tr>
-        <tr><td>🌿 植物</td><td>高贵的</td><td>花 🌸</td></tr>
-        <tr><td>🌿 植物</td><td>商人</td><td>李子 🍑</td></tr>
+        <tr><th>共犯者</th><th>死因</th><th>→ 毒物</th></tr>
+        <tr><td>高贵的</td><td>🤮 Emesis（呕吐）</td><td>🐡 河豚 (Pufferfish)</td></tr>
+        <tr><td>高贵的</td><td>🌿 Noxious Plant（有毒植物）</td><td>🌸 乌头花 (Monkshood)</td></tr>
+        <tr><td>园丁</td><td>🤮 Noxious Food Emesis</td><td>🍑 李子核 (Plum Pit)</td></tr>
+        <tr><td>园丁</td><td>🦴 Paralysis（瘫痪）</td><td>🌸 乌头花 (Monkshood)</td></tr>
+        <tr><td>商人</td><td>🌿 Noxious Plant</td><td>🍑 李子核 (Plum Pit)</td></tr>
+        <tr><td>商人</td><td>🤮 Emesis（呕吐）</td><td>🐡 河豚 (Pufferfish)</td></tr>
       </table>
 
-      <div class="warn">马头花和河豚都带瘫痪效果，容易误判！需将河豚移到马头花位置 → 过波 → 再次与香火互动确认</div>
+      <div class="warn">马头花和河豚都带瘫痪效果容易误判！需将河豚移到马头花位置 → 过波 → 再次与香火互动确认</div>
     </div>
 
     <div class="step">
       <div class="step-header">
         <span class="step-num purple">3</span>
+        <span class="step-title">生肖转盘 — 最终锁定</span>
+        <span class="step-loc">禅房金属转盘</span>
+      </div>
+      <p>确定毒物后，通过生肖转盘计算最终答案：</p>
+      <ul>
+        <li>查看 <strong>毒物表</strong>（墙上右侧纸条），找到第3幅画毒物对应的 <strong>致死时间</strong>（如河豚=1小时）</li>
+        <li>查看 <strong>医嘱</strong>，找到 <strong>死亡时间对应的生肖动物</strong>（如：Boar/猪）</li>
+        <li>在金属转盘上找到该生肖，<strong>逆时针转动</strong> 致死时间的格数</li>
+        <li>最终指向的生肖即为答案</li>
+      </ul>
+
+      <p style="margin:10px 0 6px;font-weight:600;font-size:14px;">🔄 十二生肖转盘（逆时针顺序）：</p>
+      <table class="items-table">
+        <tr><th>生肖</th><th>英文名</th><th>备注</th></tr>
+        <tr><td>🐀 鼠</td><td>Rat</td><td></td></tr>
+        <tr><td>🐂 牛</td><td>Ox</td><td></td></tr>
+        <tr><td>🐅 虎</td><td>Tiger</td><td></td></tr>
+        <tr><td>🐇 兔</td><td>Rabbit</td><td></td></tr>
+        <tr><td>🐉 龙</td><td>Dragon</td><td></td></tr>
+        <tr><td>🐍 蛇</td><td>Snake</td><td></td></tr>
+        <tr><td>🐎 马</td><td>Horse / Stallion</td><td>可能显示为Stallion</td></tr>
+        <tr><td>🐑 羊</td><td>Goat / Sheep</td><td></td></tr>
+        <tr><td>🐒 猴</td><td>Monkey</td><td></td></tr>
+        <tr><td>🐓 鸡</td><td>Rooster</td><td></td></tr>
+        <tr><td>🐕 狗</td><td>Dog</td><td></td></tr>
+        <tr><td>🐖 猪</td><td>Boar / Pig</td><td>可能显示为Boar</td></tr>
+      </table>
+
+      <div class="tip">举例：医嘱写"Boar"死亡，毒物表写河豚致死时间1小时 → 在转盘找到猪 → 逆时针转1格 → 指向狗 → 点香提交</div>
+      <div class="warn">提交时注意左右两侧都要点香！小心不要误触转盘。失败会刷出特殊僵尸，需过波重试</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">4</span>
         <span class="step-title">陷阱击杀与共犯者识别</span>
         <span class="step-loc">地图四处陷阱</span>
       </div>
       <ul>
-        <li>开启地图内四处陷阱（蓝色发光装置）</li>
-        <li>在每个陷阱处用陷阱击杀僵尸</li>
-        <li>寻找「摸鱼的灵魂卫兵」（紫黑色幽灵 NPC）</li>
-        <li>四处陷阱只有一处会告诉你共犯者的真实身份</li>
-        <li>将算盘放在「共犯者」画像下方</li>
+        <li>开启地图内陷阱（蓝色发光装置），在陷阱激活期间击杀 <strong>15-20个僵尸</strong></li>
+        <li>击杀后在附近窗户寻找 <strong>面向错误的灵魂卫兵</strong>（紫黑色幽灵NPC）</li>
+        <li>互动灵魂卫兵，开启字幕听取台词</li>
+        <li>灵魂会提到共犯者：<strong>园丁 (Gardener) / 商人 (Merchant) / 高贵者 (Nobleman/Courtier)</strong></li>
+        <li>如果没有提到任何人，换一个陷阱重试（共4个陷阱，3个有效）</li>
+        <li>确认共犯者后，将对应物品放在第2幅画前</li>
       </ul>
     </div>
 
