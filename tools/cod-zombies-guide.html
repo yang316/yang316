@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荒城鬼影 — 主线彩蛋完全攻略</title>
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --surface2: #1c2333;
+    --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+    --accent: #58a6ff; --accent2: rgba(88,166,255,0.12);
+    --green: #3fb950; --green2: rgba(63,185,80,0.12);
+    --yellow: #e3b341; --yellow2: rgba(227,179,65,0.12);
+    --red: #f85149; --red2: rgba(248,81,73,0.12);
+    --purple: #bc8cff; --purple2: rgba(188,140,255,0.12);
+    --radius: 14px; --radius-sm: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "SF Pro Display", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 24px 16px 60px; }
+  .container { max-width: 780px; margin: 0 auto; }
+  .back { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); text-decoration: none; font-size: 13px; margin-bottom: 20px; }
+  .back:hover { color: var(--accent); }
+
+  .hero { text-align: center; margin-bottom: 36px; padding: 32px 20px; background: linear-gradient(135deg, #1a1e2e 0%, #0d1117 100%); border: 1px solid var(--border); border-radius: var(--radius); }
+  .hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .hero .sub { color: var(--muted); font-size: 14px; }
+  .hero .tags { display: flex; gap: 8px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+  .tag { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
+  .tag-mode { background: var(--red2); color: var(--red); }
+  .tag-map { background: var(--accent2); color: var(--accent); }
+  .tag-diff { background: var(--yellow2); color: var(--yellow); }
+
+  /* 目录 */
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 28px; }
+  .toc h3 { font-size: 15px; margin-bottom: 12px; color: var(--muted); }
+  .toc-list { list-style: none; }
+  .toc-list li { margin-bottom: 6px; }
+  .toc-list a { color: var(--accent); text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .toc-list a:hover { text-decoration: underline; }
+  .toc-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 6px; background: var(--accent2); color: var(--accent); font-size: 12px; font-weight: 700; flex-shrink: 0; }
+
+  /* 章节 */
+  .section { margin-bottom: 32px; scroll-margin-top: 20px; }
+  .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .section-title { font-size: 20px; font-weight: 700; }
+  .section-sub { font-size: 13px; color: var(--muted); }
+
+  /* 步骤卡片 */
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 18px; }
+  .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .step-num { width: 26px; height: 26px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .step-num.blue { background: var(--accent2); color: var(--accent); }
+  .step-num.green { background: var(--green2); color: var(--green); }
+  .step-num.yellow { background: var(--yellow2); color: var(--yellow); }
+  .step-num.red { background: var(--red2); color: var(--red); }
+  .step-num.purple { background: var(--purple2); color: var(--purple); }
+  .step-title { font-size: 15px; font-weight: 600; }
+  .step-loc { font-size: 12px; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 4px; margin-left: auto; }
+  .step p, .step li { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .step ul { padding-left: 18px; margin: 6px 0; }
+  .step li { margin-bottom: 4px; }
+  .step .warn { background: var(--yellow2); border: 1px solid rgba(227,179,65,0.2); border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 13px; }
+  .step .warn::before { content: "⚠️ "; }
+
+  /* 道具表格 */
+  .items-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+  .items-table th, .items-table td { padding: 8px 12px; border: 1px solid var(--border); text-align: left; }
+  .items-table th { background: var(--surface2); font-weight: 600; }
+
+  /* 分隔 */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* 底部 */
+  .footer { text-align: center; color: var(--muted); font-size: 13px; padding-top: 20px; border-top: 1px solid var(--border); margin-top: 40px; }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 22px; }
+    .section-title { font-size: 17px; }
+    .step { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="index.html" class="back">← 返回工具箱</a>
+
+<div class="hero">
+  <h1>🏚️ 荒城鬼影 — 主线彩蛋完全攻略</h1>
+  <p class="sub">使命召唤：黑色行动7 · 僵尸模式</p>
+  <div class="tags">
+    <span class="tag tag-mode">僵尸模式</span>
+    <span class="tag tag-map">荒城鬼影</span>
+    <span class="tag tag-diff">难度：⭐⭐⭐⭐</span>
+  </div>
+</div>
+
+<!-- 目录 -->
+<div class="toc">
+  <h3>📖 攻略目录</h3>
+  <ul class="toc-list">
+    <li><a href="#weapon"><span class="toc-num">0</span> 奇迹武器「猫灵法师」获取</a></li>
+    <li><a href="#s1"><span class="toc-num">1</span> 仪容者画像</a></li>
+    <li><a href="#s2"><span class="toc-num">2</span> 共犯者画像</a></li>
+    <li><a href="#s3"><span class="toc-num">3</span> 毒画像</a></li>
+    <li><a href="#s4"><span class="toc-num">4</span> 场所画像</a></li>
+    <li><a href="#s5"><span class="toc-num">5</span> 动机画像</a></li>
+    <li><a href="#s6"><span class="toc-num">6</span> 推理共谋者（终极战前置）</a></li>
+  </ul>
+</div>
+
+<!-- ===== 奇迹武器 ===== -->
+<div class="section" id="weapon">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--purple2)">🔮</div>
+    <div>
+      <div class="section-title">奇迹武器「猫灵法师」获取</div>
+      <div class="section-sub">前置准备 · 收集零件 → 组装 → 猫脚印 → 抓猫 → 解救</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">0</span>
+        <span class="step-title">配装建议</span>
+      </div>
+      <ul>
+        <li>主武器：双持 1911 手枪（前期清杂）+ 远程武器（后期需要）</li>
+        <li>战场升级：「疯狂守卫」（大型改造：狂暴射击；小型改造：延长时效 + 双层防护）</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">1</span>
+        <span class="step-title">收集三个零件</span>
+        <span class="step-loc">全图探索</span>
+      </div>
+      <p>需要收集 <strong>风铃、机械木偶、招财猫</strong> 三个零件，每个有 3 个随机刷新位置：</p>
+      <table class="items-table">
+        <tr><th>零件</th><th>已确认位置</th></tr>
+        <tr><td>🎐 风铃</td><td>训练场、马厩</td></tr>
+        <tr><td>🐱 招财猫</td><td>西城门室内（木箱上方白色摆件）</td></tr>
+        <tr><td>🎎 机械木偶</td><td>探索中拾取（3个随机点位）</td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">2</span>
+        <span class="step-title">工房组装招财猫</span>
+        <span class="step-loc">工房 Workshop</span>
+      </div>
+      <p>前往工房，在工作台处组装三个零件，制作成 <strong>战术道具「招财猫」</strong>。屏幕会显示蓝色进度条。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">3</span>
+        <span class="step-title">猫脚印任务</span>
+        <span class="step-loc">天守阁 → 花园 → 大门</span>
+      </div>
+      <ul>
+        <li>前往天守阁入口，触发标记猫笼</li>
+        <li>触发「飞升专家」后拾取猫笼</li>
+        <li>将猫笼丢入任意岩浆（如花园熔岩溪流），等待消失</li>
+        <li>进入下一回合</li>
+        <li>在 <strong>四个大门前击杀僵尸</strong>，有概率出现猫脚印</li>
+        <li>必须在脚印消失前击杀僵尸，下一组才会出现</li>
+        <li>重复直到脚印在原地徘徊不再走</li>
+      </ul>
+      <div class="warn">岩浆区域有时会停止流淌（如马厩处），需等待岩浆重新流动再丢入招财猫</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">4</span>
+        <span class="step-title">抓猫</span>
+        <span class="step-loc">厨房 / 马厩</span>
+      </div>
+      <ul>
+        <li>饮用「死亡感知」饮料（技能栏骷髅图标）</li>
+        <li>猫会刷新在三处可透视木地板位置（已确认：厨房、马厩）</li>
+        <li>被死亡感知透视到的地板踩上会发出声音，导致猫逃跑</li>
+        <li><strong>必须全程蹲下</strong>，避开被透视的木地板，才能成功抓到猫</li>
+      </ul>
+      <div class="warn">抓猫环节必须蹲下！踩到透视地板猫就会逃跑</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">5</span>
+        <span class="step-title">解救猫 → 获得奇迹武器</span>
+        <span class="step-loc">将军御殿</span>
+      </div>
+      <ul>
+        <li>将猫带至将军御殿（超猛改造处）</li>
+        <li>猫会跳到前方的「蛋」上</li>
+        <li>等待「蛋」发出冲击波（⚠️ 伤害极高，注意躲避）</li>
+        <li>冲击波过后，<strong>近战攻击「蛋」</strong></li>
+        <li>成功解救猫，获得奇迹武器「猫灵法师」🔮</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 仪容者画像 ===== -->
+<div class="section" id="s1">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--accent2)">🖼️</div>
+    <div>
+      <div class="section-title">主线一：仪容者画像</div>
+      <div class="section-sub">点亮路灯 → 灵魂剧情 → 收集面具 → 记忆挑战 → 解锁画像</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">1</span>
+        <span class="step-title">使用奇迹武器点亮 11 盏路灯</span>
+        <span class="step-loc">城镇街道</span>
+      </div>
+      <p>手持奇迹武器，沿路线快速射击 11 盏路灯使其全部点亮。顺序随意，但必须快速全部射完。</p>
+      <div class="warn">必须快速连续射完所有路灯，失败需过渡（过波）重试</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">2</span>
+        <span class="step-title">军议间 — 观看灵魂幻影剧情</span>
+        <span class="step-loc">军议间</span>
+      </div>
+      <p>进入军议间，触发蓝色半透明灵魂幻影（共4个），观看剧情还原：</p>
+      <ul>
+        <li>NPC武雄：「我不知道。我来的时候，他已经死了。」</li>
+        <li>后续对话揭露：「正树武雄…你谋杀了幕府将军，我们的父亲，你必须付出代价。」</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">3</span>
+        <span class="step-title">收集逃走的面具（3处）</span>
+        <span class="step-loc">书房废墟 / 温泉浴室等</span>
+      </div>
+      <p>剧情结束后，在 3 个指定位置寻找逃走的面具，每次找到会掉落任务道具，务必拾取。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">4</span>
+        <span class="step-title">空中快速旅行拾取狐女面具</span>
+        <span class="step-loc">屋顶上空</span>
+      </div>
+      <p>在快速旅行途中，从房顶拿取狐女面具。技巧：<strong>按住 D 键同时狂按互动键</strong>。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">5</span>
+        <span class="step-title">面具墙记忆挑战（3轮）</span>
+        <span class="step-loc">储藏室</span>
+      </div>
+      <ul>
+        <li>将狐女面具放入储藏室的面具墙</li>
+        <li>观察墙上 <strong>面具闪烁的顺序</strong> 并记忆</li>
+        <li>击杀 <strong>对应佩戴这些面具的僵尸</strong>（按闪烁顺序）</li>
+        <li>共 3 轮，中途出错需过波重新开始</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">6</span>
+        <span class="step-title">放置道具 → 解锁第一幅画</span>
+        <span class="step-loc">三楼禅房</span>
+      </div>
+      <p>将收集到的 3 处面具道具放到三楼禅房，<strong>解锁第一幅画像</strong> ✅</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 共犯者画像 ===== -->
+<div class="section" id="s2">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--green2)">🗡️</div>
+    <div>
+      <div class="section-title">主线二：共犯者画像</div>
+      <div class="section-sub">收集园艺剪、算盘、商人帽子</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num green">1</span>
+        <span class="step-title">获取园艺剪</span>
+        <span class="step-loc">花园</span>
+      </div>
+      <ul>
+        <li>前往花园区域，拿起水桶（按 C 键）</li>
+        <li>用水桶为花园中 3 个固定位置的杂草浇水</li>
+        <li>刷新特殊敌人「园丁」（初始无敌状态）</li>
+        <li>打掉附近 <strong>发光的花盆</strong> 解除园丁无敌</li>
+        <li>击杀园丁获得「园艺剪」✂️</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num green">2</span>
+        <span class="step-title">获取算盘</span>
+        <span class="step-loc">厨房 → 校场</span>
+      </div>
+      <ul>
+        <li>前往厨房，对番茄果篮进行近战互动</li>
+        <li>离开该区域约 <strong>3 分钟</strong></li>
+        <li>返回厨房，击杀正在吃番茄的僵尸</li>
+        <li>将吃番茄的僵尸引导至校场指定位置击杀</li>
+        <li>引出特殊 NPC「商人」，击杀获得「算盘」🧮</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num green">3</span>
+        <span class="step-title">获取商人帽子</span>
+        <span class="step-loc">训练场</span>
+      </div>
+      <ul>
+        <li>前往训练场，使用诱饵弹投掷到二层窗户</li>
+        <li>吸引出「贵族僵尸」向你投掷手雷</li>
+        <li><strong>反掷手雷</strong> 将其炸死，获得「贵族帽子」🎩</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num green">4</span>
+        <span class="step-title">提交证据</span>
+        <span class="step-loc">禅房</span>
+      </div>
+      <p>携带所有道具返回禅房提交，完成「共犯者画像」✅</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 毒画像 ===== -->
+<div class="section" id="s3">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--red2)">☠️</div>
+    <div>
+      <div class="section-title">主线三：毒画像</div>
+      <div class="section-sub">收集梅子核、乌头花、河豚</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num red">1</span>
+        <span class="step-title">获取梅子核</span>
+        <span class="step-loc">厨房</span>
+      </div>
+      <p>找到梅子果篮，近战攻击互动，踩踏掉落的梅子，获得「梅子核」🍑</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num red">2</span>
+        <span class="step-title">获取乌头花</span>
+        <span class="step-loc">花园 → 天守阁</span>
+      </div>
+      <ul>
+        <li>前往花园，采集乌头花苞</li>
+        <li>近战打碎附近花瓶，激活 BUFF 状态（视角边缘粉色特效）</li>
+        <li>带着花苞前往天守阁入口的撤离电话亭花篮</li>
+        <li>在 BUFF 状态下互动放入火山灰，获得「乌头花」🌸</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num red">3</span>
+        <span class="step-title">获取河豚（含九宫格解谜）</span>
+        <span class="step-loc">储藏室 → 厨房</span>
+      </div>
+      <ul>
+        <li>前往储藏室书架，用「玛奇朵」近战武器攻击招财猫互动点</li>
+        <li>触发 <strong>九宫格益智解谜小游戏</strong>（类似翻转解谜）</li>
+        <li>完成解谜获得「研磨杵」</li>
+        <li>将研磨杵带到厨房碗内放入</li>
+        <li>使用奇迹武器蓄力攻击僵尸为碗充能</li>
+        <li>充能完成后在后方货架获取「河豚」🐡</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num red">4</span>
+        <span class="step-title">提交证据</span>
+        <span class="step-loc">禅房</span>
+      </div>
+      <p>收集齐三件道具返回禅房提交「毒的证据」，完成「毒画像」✅</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 场所画像 ===== -->
+<div class="section" id="s4">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--yellow2)">📍</div>
+    <div>
+      <div class="section-title">主线四：场所画像</div>
+      <div class="section-sub">收集瓷器碎片 → 修复 → 防守战 → 击杀地狱犬</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num yellow">1</span>
+        <span class="step-title">收集瓷器碎片</span>
+        <span class="step-loc">禅房 + 军议室</span>
+      </div>
+      <p>在禅房和军议室两个区域分别找到并拾取瓷器碎片。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num yellow">2</span>
+        <span class="step-title">修复瓷器</span>
+        <span class="step-loc">茶室</span>
+      </div>
+      <p>在茶室工作台使用碎片修复，获得完整的仪式碗（带红绳装饰）。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num yellow">3</span>
+        <span class="step-title">等待回合结束 → 触发剧情</span>
+        <span class="step-loc">茶室</span>
+      </div>
+      <p>等待当前回合结束，回到茶室工作台互动触发剧情对话。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num yellow">4</span>
+        <span class="step-title">书房废墟防守战</span>
+        <span class="step-loc">书房废墟</span>
+      </div>
+      <p>拿走碗前往书房废墟，在指定托盘处放置道具，抵御僵尸攻击，每次成功防守获得一个任务道具。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num yellow">5</span>
+        <span class="step-title">祭堂最终防守</span>
+        <span class="step-loc">祭堂</span>
+      </div>
+      <p>前往祭堂进行最后一次防守。会出现 <strong>地狱犬抢走道具</strong>，必须击杀地狱犬夺回。</p>
+      <div class="warn">地狱犬会抢走任务道具，必须优先击杀！</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num yellow">6</span>
+        <span class="step-title">提交证据</span>
+        <span class="step-loc">禅房</span>
+      </div>
+      <p>返回禅房提交最后的道具，完成「场所画像」✅</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 动机画像 ===== -->
+<div class="section" id="s5">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--accent2)">⏰</div>
+    <div>
+      <div class="section-title">主线五：动机画像</div>
+      <div class="section-sub">时钟密码 → 击杀扛旗僵尸 → 旗帜数字匹配</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">1</span>
+        <span class="step-title">互动时钟装置</span>
+        <span class="step-loc">储物室</span>
+      </div>
+      <p>靠近储物间下层的石制时钟，触发互动。时钟会 <strong>四次停止</strong>，记下每次停止的数字（如 2636）。互动完成后进入特殊回合。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">2</span>
+        <span class="step-title">击杀所有扛旗僵尸</span>
+        <span class="step-loc">温泉浴室</span>
+      </div>
+      <p>在特殊回合中，击杀所有扛旗僵尸（红旗僵尸/红眼僵尸），这是后续步骤的前置条件。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">3</span>
+        <span class="step-title">旗帜数字匹配</span>
+        <span class="step-loc">校场</span>
+      </div>
+      <ul>
+        <li>校场位置会刷新 <strong>带有点数的旗帜</strong></li>
+        <li>地图会刷新 <strong>四处墙壁</strong>，显示时钟停顿的数字</li>
+        <li>将旗帜点数 <strong>单个或相加</strong> 等于对应位置的数字，插在对应位置</li>
+        <li>墙壁上的数字顺序是随机的，需要自行判断对应关系</li>
+      </ul>
+      <div class="warn">每次游戏时钟数字不同，墙壁数字顺序随机！需自行观察匹配</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num blue">4</span>
+        <span class="step-title">获取金币 → 提交证据</span>
+        <span class="step-loc">储物室 → 弹房</span>
+      </div>
+      <p>数字匹配完成后，返回储物室互动钟表获得「刻有家族徽章的金币」，前往弹房提交证据，进入推理环节 ✅</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 推理共谋者 ===== -->
+<div class="section" id="s6">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--purple2)">🎭</div>
+    <div>
+      <div class="section-title">主线六：推理共谋者（终极战前置）</div>
+      <div class="section-sub">画像推理 → 毒物匹配 → 陷阱共犯者 → 面具怪 → 终极战</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">1</span>
+        <span class="step-title">禅房画像推理</span>
+        <span class="step-loc">禅房</span>
+      </div>
+      <p>根据攻略提示完成三类画像匹配：</p>
+      <table class="items-table">
+        <tr><th>画像类型</th><th>匹配道具</th></tr>
+        <tr><td>容疑者画像</td><td>梳子</td></tr>
+        <tr><td>动机画像</td><td>金币</td></tr>
+        <tr><td>场所画像</td><td>鱼=茶盏 / 山=马 / 鸟=毛笔</td></tr>
+      </table>
+      <p>同时阅读禅房内的剧情文档（羊皮纸卷轴），收集将军与家族矛盾的动机线索。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">2</span>
+        <span class="step-title">尸检记录与毒物匹配</span>
+        <span class="step-loc">右侧走廊 / 军议室</span>
+      </div>
+      <ul>
+        <li>查看「尸检记录」，提取中毒/瘫痪反应信息</li>
+        <li>前往军议室获取对应纸条</li>
+        <li>根据瘫痪症状找到对应毒物，放在「毒」画像下方</li>
+      </ul>
+      <div class="warn">马头花和河豚都带瘫痪效果，容易误判！需将河豚移到马头花位置 → 过波 → 再次与香火互动确认</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">3</span>
+        <span class="step-title">陷阱击杀与共犯者识别</span>
+        <span class="step-loc">地图四处陷阱</span>
+      </div>
+      <ul>
+        <li>开启地图内四处陷阱（蓝色发光装置）</li>
+        <li>在每个陷阱处用陷阱击杀僵尸</li>
+        <li>寻找「摸鱼的灵魂卫兵」（紫黑色幽灵 NPC）</li>
+        <li>四处陷阱只有一处会告诉你共犯者的真实身份</li>
+        <li>将算盘放在「共犯者」画像下方</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">4</span>
+        <span class="step-title">跟随雾气 → 面具怪物战斗</span>
+        <span class="step-loc">超猛改造处</span>
+      </div>
+      <p>场景中出现黄/绿色雾气引导，跟随前往蛋形互物体，触发前置战斗，击杀面具怪物（带能量锁链精英怪）。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">5</span>
+        <span class="step-title">终极战准备</span>
+        <span class="step-loc">中庭</span>
+      </div>
+      <ul>
+        <li>天空出现红黑色能量漩涡（Boss 预兆）</li>
+        <li>利用准备时间：配置齐全特饮/Perk 技能</li>
+        <li>将武器完成超猛改造（高品质改造）</li>
+        <li>持续击杀僵尸积累任务进度，填满后解锁终极战</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num red">6</span>
+        <span class="step-title">终极 BOSS 战</span>
+        <span class="step-loc">荒城废墟</span>
+      </div>
+      <p>场景转为被摧毁的日式建筑废墟，天空变暗，巨型 Boss 出现。正式开启终极 BOSS 战！🎮</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>视频来源：<a href="https://b23.tv/RgWsFmd">B站 @阳炎好孩子</a> · 攻略由 AI 辅助生成</p>
+  <p><a href="index.html">← 返回工具箱</a></p>
+</div>
+
+</div>
+</body>
+</html>
