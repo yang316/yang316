@@ -33,273 +33,14 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 24px 16px 40px;
+    padding: 24px;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Header */
-  .header {
-    text-align: center;
-    margin-bottom: 28px;
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
   }
-  .header h1 {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 8px;
-  }
-  .header p {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  /* 九宫格 */
-  .grid-container {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-    margin-bottom: 24px;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-  .cell {
-    width: 88px;
-    height: 88px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 2px solid transparent;
-  }
-  .cell:active {
-    transform: scale(0.92);
-  }
-  .cell.off {
-    background: #21262d;
-    border-color: #30363d;
-  }
-  .cell.off:hover {
-    background: #282e36;
-    border-color: #484f58;
-  }
-  .cell.on {
-    background: linear-gradient(135deg, #ffd966 0%, #e3b341 100%);
-    border-color: #d4a843;
-    box-shadow: 0 0 20px var(--yellow-glow), inset 0 1px 0 rgba(255,255,255,0.2);
-  }
-  .cell.on:hover {
-    background: linear-gradient(135deg, #ffe07a 0%, #eab830 100%);
-  }
-  .cell .num {
-    position: absolute;
-    top: 6px;
-    left: 8px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-muted);
-    opacity: 0.7;
-  }
-  .cell.on .num { color: #8b6914; opacity: 0.8; }
-  .cell .val {
-    font-size: 28px;
-    font-weight: 700;
-    transition: transform 0.15s ease;
-  }
-  .cell.off .val { color: #484f58; }
-  .cell.on .val { color: #5c4400; }
-  .cell.pop .val { animation: pop 0.25s ease; }
-
-  @keyframes pop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-    100% { transform: scale(1); }
-  }
-
-  /* 按钮区 */
-  .actions {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 28px;
-    width: 100%;
-    max-width: 320px;
-  }
-  .btn {
-    flex: 1;
-    padding: 14px 20px;
-    font-size: 15px;
-    font-weight: 600;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .btn:active { transform: scale(0.96); }
-  .btn-primary {
-    background: var(--accent);
-    color: #fff;
-  }
-  .btn-primary:hover { background: var(--accent-hover); }
-  .btn-secondary {
-    background: var(--surface);
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-  }
-  .btn-secondary:hover {
-    background: var(--surface-hover);
-    color: var(--text);
-  }
-
-  /* 结果区 */
-  .result-container {
-    width: 100%;
-    max-width: 380px;
-  }
-  .result-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    animation: slideUp 0.3s ease;
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .result-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .result-header .icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: var(--green-subtle);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-  }
-  .result-header .title {
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .result-header .badge {
-    margin-left: auto;
-    font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: var(--accent-subtle);
-    color: var(--accent);
-    font-weight: 500;
-  }
-
-  .result-body {
-    padding: 16px 20px;
-  }
-  .answer-text {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 16px;
-    line-height: 1.6;
-  }
-  .answer-text strong {
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  /* 步骤 */
-  .steps { display: flex; flex-direction: column; gap: 10px; }
-  .step {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px;
-    transition: all 0.2s ease;
-  }
-  .step:hover {
-    border-color: var(--accent);
-    background: var(--accent-subtle);
-  }
-  .step-label {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .step-num {
-    width: 22px;
-    height: 22px;
-    border-radius: 6px;
-    background: var(--accent-subtle);
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .step.on .step-num {
-    background: var(--yellow-subtle);
-    color: var(--yellow);
-  }
-
-  .mini-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-  }
-  .mini-cell {
-    aspect-ratio: 1;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 700;
-    transition: all 0.2s ease;
-  }
-  .mini-cell.off { background: #21262d; color: #484f58; }
-  .mini-cell.on {
-    background: linear-gradient(135deg, #ffd966 0%, #e3b341 100%);
-    color: #5c4400;
-  }
-  .mini-cell.highlight {
-    box-shadow: 0 0 0 2px var(--accent);
-  }
-
-  /* 空状态 */
-  .empty-state {
-    text-align: center;
-    padding: 8px 0;
-    color: var(--text-muted);
-    font-size: 14px;
-  }
-  .empty-state .icon { font-size: 24px; margin-bottom: 8px; }
 
   /* 返回链接 */
   .back-link {
@@ -314,49 +55,373 @@
   }
   .back-link:hover { color: var(--accent); }
 
-  /* 移动端适配 */
-  @media (max-width: 400px) {
-    .cell {
-      width: 78px;
-      height: 78px;
-    }
-    .cell .val { font-size: 24px; }
-    .grid-container { padding: 16px; }
-    .grid { gap: 8px; }
-    .header h1 { font-size: 22px; }
-    .actions { max-width: 280px; }
-    .btn { padding: 12px 16px; font-size: 14px; }
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .header p {
+    font-size: 14px;
+    color: var(--text-muted);
   }
 
-  @media (max-width: 320px) {
-    .cell {
-      width: 68px;
-      height: 68px;
+  /* 主布局 */
+  .main {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  /* 左侧 - 输入区 */
+  .input-panel {
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+  }
+  .grid-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .cell {
+    width: 84px;
+    height: 84px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: all 0.15s ease;
+    border: 2px solid transparent;
+  }
+  .cell:active { transform: scale(0.92); }
+  .cell.off {
+    background: #21262d;
+    border-color: #30363d;
+  }
+  .cell.off:hover {
+    background: #282e36;
+    border-color: #484f58;
+  }
+  .cell.on {
+    background: linear-gradient(135deg, #ffd966 0%, #e3b341 100%);
+    border-color: #d4a843;
+    box-shadow: 0 0 16px var(--yellow-glow), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .cell.on:hover {
+    background: linear-gradient(135deg, #ffe07a 0%, #eab830 100%);
+  }
+  .cell .num {
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.6;
+  }
+  .cell.off .num { color: var(--text-muted); }
+  .cell.on .num { color: #8b6914; }
+  .cell .val {
+    font-size: 26px;
+    font-weight: 700;
+    transition: transform 0.15s ease;
+  }
+  .cell.off .val { color: #484f58; }
+  .cell.on .val { color: #5c4400; }
+  .cell.pop .val { animation: pop 0.2s ease; }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+  }
+
+  /* 按钮 */
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .btn {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-secondary {
+    background: var(--surface-hover);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover {
+    background: #2d333b;
+    color: var(--text);
+  }
+
+  /* 右侧 - 结果区 */
+  .result-panel {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* 空状态 */
+  .empty-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .empty-card .icon { font-size: 36px; margin-bottom: 12px; opacity: 0.5; }
+  .empty-card p { font-size: 14px; }
+
+  /* 结果卡片 */
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.25s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .result-header .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: var(--green-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .result-header .title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .result-header .badge {
+    margin-left: auto;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .result-body {
+    padding: 16px 18px;
+  }
+  .answer-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .answer-text strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* 步骤网格 - 横向滚动 */
+  .steps-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    padding-bottom: 4px;
+  }
+  .steps-scroll::-webkit-scrollbar { height: 6px; }
+  .steps-scroll::-webkit-scrollbar-track { background: transparent; }
+  .steps-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .steps-row {
+    display: flex;
+    gap: 10px;
+    min-width: min-content;
+  }
+
+  .step {
+    flex-shrink: 0;
+    width: 120px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: #484f58; }
+  .step.active {
+    border-color: var(--yellow);
+    background: var(--yellow-subtle);
+  }
+
+  .step-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .step-num {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .step.active .step-num {
+    background: rgba(227,179,65,0.3);
+    color: var(--yellow);
+  }
+
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  .mini-cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .mini-cell.off { background: #21262d; color: #484f58; }
+  .mini-cell.on {
+    background: linear-gradient(135deg, #ffd966, #e3b341);
+    color: #5c4400;
+  }
+  .mini-cell.hl {
+    box-shadow: inset 0 0 0 2px var(--accent);
+  }
+
+  .empty-result {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .empty-result .icon { font-size: 28px; margin-bottom: 8px; }
+
+  /* ===== 移动端 ===== */
+  @media (max-width: 680px) {
+    body { padding: 16px; }
+
+    .main {
+      flex-direction: column;
     }
-    .cell .val { font-size: 20px; }
-    .cell .num { font-size: 10px; }
+
+    .input-panel {
+      position: static;
+      width: 100%;
+    }
+
+    .grid-card {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .cell {
+      width: 88px;
+      height: 88px;
+    }
+
+    .result-panel { width: 100%; }
+
+    .steps-row { gap: 8px; }
+    .step { width: 110px; }
+  }
+
+  @media (max-width: 360px) {
+    .cell {
+      width: 76px;
+      height: 76px;
+    }
+    .cell .val { font-size: 22px; }
+    .grid { gap: 8px; }
+    .grid-card { padding: 16px; }
   }
 </style>
 </head>
 <body>
 
-<a href="index.html" class="back-link">← 返回工具箱</a>
+<div class="container">
+  <a href="index.html" class="back-link">← 返回工具箱</a>
 
-<div class="header">
-  <h1>🔲 九宫格翻转求解器</h1>
-  <p>点击格子设定初始状态，一键求解</p>
+  <div class="header">
+    <h1>🔲 九宫格翻转求解器</h1>
+    <p>点击格子切换状态，一键求解</p>
+  </div>
+
+  <div class="main">
+    <!-- 左侧：输入 -->
+    <div class="input-panel">
+      <div class="grid-card">
+        <div class="grid" id="grid"></div>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="solve()">✨ 求解</button>
+          <button class="btn btn-secondary" onclick="resetGrid()">↺ 清零</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧：结果 -->
+    <div class="result-panel" id="resultPanel">
+      <div class="empty-card">
+        <div class="icon">🔲</div>
+        <p>设定初始状态后点击求解</p>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="grid-container">
-  <div class="grid" id="grid"></div>
-</div>
-
-<div class="actions">
-  <button class="btn btn-primary" onclick="solve()">✨ 求解</button>
-  <button class="btn btn-secondary" onclick="resetGrid()">↺ 清零</button>
-</div>
-
-<div class="result-container" id="resultContainer"></div>
 
 <script>
 const neighbors = {
@@ -369,7 +434,6 @@ const gridEl = document.getElementById('grid');
 let state = new Array(10).fill(0);
 const layout = [7,8,9,4,5,6,1,2,3];
 
-// 初始化九宫格
 layout.forEach(i => {
   const cell = document.createElement('div');
   cell.className = 'cell off';
@@ -379,28 +443,29 @@ layout.forEach(i => {
     const valEl = cell.querySelector('.val');
     valEl.textContent = state[i];
     cell.className = 'cell ' + (state[i] ? 'on' : 'off');
-    // pop 动画
     cell.classList.add('pop');
-    setTimeout(() => cell.classList.remove('pop'), 250);
+    setTimeout(() => cell.classList.remove('pop'), 200);
   };
   gridEl.appendChild(cell);
 });
 
 function resetGrid() {
   for (let i = 1; i <= 9; i++) state[i] = 0;
-  Array.from(gridEl.children).forEach((c, idx) => {
+  Array.from(gridEl.children).forEach(c => {
     c.querySelector('.val').textContent = '0';
     c.className = 'cell off';
   });
-  document.getElementById('resultContainer').innerHTML = '';
+  document.getElementById('resultPanel').innerHTML = `
+    <div class="empty-card">
+      <div class="icon">🔲</div>
+      <p>设定初始状态后点击求解</p>
+    </div>`;
 }
 
 function applyPress(s, presses) {
   let res = [...s];
   for (let i = 1; i <= 9; i++) {
-    if (presses[i]) {
-      for (let n of neighbors[i]) res[n] ^= 1;
-    }
+    if (presses[i]) for (let n of neighbors[i]) res[n] ^= 1;
   }
   return res;
 }
@@ -410,13 +475,13 @@ function solve() {
   let found = false;
   for (let mask = 0; mask < 512; mask++) {
     for (let i = 1; i <= 9; i++) presses[i] = (mask >> (i-1)) & 1;
-    let finalState = applyPress(state, presses);
-    if (finalState.every(v => v === 0)) { found = true; break; }
+    if (applyPress(state, presses).every(v => v === 0)) { found = true; break; }
   }
 
-  const container = document.getElementById('resultContainer');
+  const panel = document.getElementById('resultPanel');
+
   if (!found) {
-    container.innerHTML = `
+    panel.innerHTML = `
       <div class="result-card">
         <div class="result-header">
           <div class="icon" style="background:rgba(248,81,73,0.15)">❌</div>
@@ -426,60 +491,57 @@ function solve() {
     return;
   }
 
-  let pressList = [];
+  const pressList = [];
   for (let i = 1; i <= 9; i++) if (presses[i]) pressList.push(i);
 
-  let html = `
+  // 构建步骤
+  let stepsHtml = '';
+  let cur = [...state];
+
+  // 初始状态
+  stepsHtml += `
+    <div class="step">
+      <div class="step-label"><span class="step-num">初</span> 初始</div>
+      <div class="mini-grid">
+        ${layout.map(i => `<div class="mini-cell ${cur[i] ? 'on' : 'off'}">${cur[i]}</div>`).join('')}
+      </div>
+    </div>`;
+
+  // 每步
+  let sn = 1;
+  for (const p of pressList) {
+    const hl = new Set(neighbors[p]);
+    for (const n of neighbors[p]) cur[n] ^= 1;
+    stepsHtml += `
+      <div class="step ${sn === pressList.length ? 'active' : ''}">
+        <div class="step-label"><span class="step-num">${sn}</span> 按 ${p} 号</div>
+        <div class="mini-grid">
+          ${layout.map(i => `<div class="mini-cell ${cur[i] ? 'on' : 'off'} ${hl.has(i) ? 'hl' : ''}">${cur[i]}</div>`).join('')}
+        </div>
+      </div>`;
+    sn++;
+  }
+
+  const answerText = pressList.length === 0
+    ? '已经是全 0，无需操作 🎉'
+    : `按下 <strong>${pressList.map(i => i + '号').join('、')}</strong>（顺序无关）`;
+
+  panel.innerHTML = `
     <div class="result-card">
       <div class="result-header">
         <div class="icon">✅</div>
         <div class="title">求解成功</div>
-        <div class="badge">${pressList.length} 步</div>
+        <div class="badge">${pressList.length === 0 ? '0 步' : pressList.length + ' 步'}</div>
       </div>
-      <div class="result-body">`;
-
-  if (pressList.length === 0) {
-    html += `<div class="empty-state"><div class="icon">🎉</div>已经是全 0，无需操作</div>`;
-  } else {
-    html += `<div class="answer-text">按下 <strong>${pressList.map(i => i + '号').join('、')}</strong>（顺序无关）</div>`;
-
-    let currentState = [...state];
-    html += `
-      <div class="steps">
-        <div class="step">
-          <div class="step-label">
-            <span class="step-num">初</span> 初始状态
+      <div class="result-body">
+        <div class="answer-text">${answerText}</div>
+        ${pressList.length > 0 ? `
+          <div class="steps-scroll">
+            <div class="steps-row">${stepsHtml}</div>
           </div>
-          <div class="mini-grid">
-            ${layout.map(i => `<div class="mini-cell ${currentState[i] ? 'on' : 'off'}">${currentState[i]}</div>`).join('')}
-          </div>
-        </div>`;
-
-    let stepNum = 1;
-    for (let p of pressList) {
-      for (let n of neighbors[p]) currentState[n] ^= 1;
-      html += `
-        <div class="step on">
-          <div class="step-label">
-            <span class="step-num">${stepNum}</span> 按下 ${p} 号
-          </div>
-          <div class="mini-grid">
-            ${layout.map((i, idx) => {
-              const isHighlight = neighbors[p].includes(i);
-              return `<div class="mini-cell ${currentState[i] ? 'on' : 'off'} ${isHighlight ? 'highlight' : ''}">${currentState[i]}</div>`;
-            }).join('')}
-          </div>
-        </div>`;
-      stepNum++;
-    }
-    html += `</div>`;
-  }
-
-  html += `</div></div>`;
-  container.innerHTML = html;
-
-  // 滚动到结果
-  container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        ` : ''}
+      </div>
+    </div>`;
 }
 </script>
 </body>
