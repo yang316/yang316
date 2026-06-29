@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>九宫格翻转游戏 — 完全攻略</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: rgba(88,166,255,0.12);
+    --green: #3fb950;
+    --green-subtle: rgba(63,185,80,0.12);
+    --yellow: #d29922;
+    --yellow-subtle: rgba(210,153,34,0.12);
+    --red: #f85149;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "SF Pro Text", "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .back:hover { text-decoration: underline; }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 36px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 28px;
+    margin-bottom: 12px;
+  }
+  p { margin-bottom: 14px; }
+  ul, ol { margin-bottom: 14px; padding-left: 24px; }
+  li { margin-bottom: 6px; }
+
+  /* 九宫格展示 */
+  .grid-demo {
+    display: inline-grid;
+    grid-template-columns: repeat(3, 56px);
+    gap: 4px;
+    margin: 12px 0;
+    vertical-align: middle;
+  }
+  .grid-demo .gcell {
+    width: 56px;
+    height: 56px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    border: 2px solid var(--border);
+  }
+  .gcell.on { background: #ffd966; color: #333; border-color: #d4a843; }
+  .gcell.off { background: #21262d; color: var(--text-muted); }
+  .gcell.highlight { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-subtle); }
+
+  /* 行内 grid 组 */
+  .grid-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 16px 0;
+  }
+  .grid-group {
+    text-align: center;
+  }
+  .grid-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+  .arrow {
+    font-size: 24px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+  }
+
+  /* 提示框 */
+  .tip {
+    background: var(--accent-subtle);
+    border: 1px solid rgba(88,166,255,0.3);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .tip::before { content: "💡 "; }
+
+  .warn {
+    background: var(--yellow-subtle);
+    border: 1px solid rgba(210,153,34,0.3);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .warn::before { content: "⚠️ "; }
+
+  /* 关卡表格 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  th {
+    background: var(--surface);
+    font-weight: 600;
+  }
+  td { background: var(--bg); }
+  tr:hover td { background: var(--surface-hover); }
+
+  /* 编号说明 */
+  .numbering {
+    display: inline-grid;
+    grid-template-columns: repeat(3, 40px);
+    gap: 3px;
+    margin: 8px 0;
+  }
+  .numbering span {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  /* 代码 */
+  code {
+    background: var(--surface);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: "SF Mono", "Fira Code", monospace;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding-top: 40px;
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 24px; }
+    .grid-demo .gcell { width: 44px; height: 44px; font-size: 16px; }
+    .grid-demo { grid-template-columns: repeat(3, 44px); }
+    .grid-row { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back" href="index.html">← 返回工具箱</a>
+
+  <h1>🔲 九宫格翻转游戏 — 完全攻略</h1>
+  <p class="meta">规则 · 数学原理 · 必胜策略 · 关卡解法</p>
+
+  <!-- ===== 1. 游戏规则 ===== -->
+  <h2>一、游戏规则</h2>
+  <p>九宫格上有 9 个格子，每个格子有 <strong>亮（1）</strong>和 <strong>灭（0）</strong>两种状态。点击任意一个格子，它和它<strong>上下左右相邻</strong>的格子都会翻转（亮变灭、灭变亮）。</p>
+  <p><strong>目标：</strong>把所有格子都变成灭（全 0）。</p>
+
+  <p>格子编号采用<strong>小键盘布局</strong>（7-8-9 在上，1-2-3 在下）：</p>
+  <div class="numbering">
+    <span>7</span><span>8</span><span>9</span>
+    <span>4</span><span>5</span><span>6</span>
+    <span>1</span><span>2</span><span>3</span>
+  </div>
+
+  <p>每个格子按下后会影响的范围：</p>
+  <table>
+    <tr><th>按下的格子</th><th>影响的格子</th><th>翻转数量</th></tr>
+    <tr><td>1 号</td><td>1, 2, 4</td><td>3</td></tr>
+    <tr><td>2 号</td><td>1, 2, 3, 5</td><td>4</td></tr>
+    <tr><td>3 号</td><td>2, 3, 6</td><td>3</td></tr>
+    <tr><td>4 号</td><td>1, 4, 5, 7</td><td>4</td></tr>
+    <tr><td>5 号</td><td>2, 4, 5, 6, 8</td><td>5（中心）</td></tr>
+    <tr><td>6 号</td><td>3, 5, 6, 9</td><td>4</td></tr>
+    <tr><td>7 号</td><td>4, 7, 8</td><td>3</td></tr>
+    <tr><td>8 号</td><td>5, 7, 8, 9</td><td>4</td></tr>
+    <tr><td>9 号</td><td>6, 8, 9</td><td>3</td></tr>
+  </table>
+
+  <div class="tip">关键性质：<strong>按两次等于没按</strong>（翻转两次恢复原状）。所以每个格子最多只需要按 1 次。</div>
+
+  <!-- ===== 2. 数学原理 ===== -->
+  <h2>二、数学原理</h2>
+
+  <h3>为什么暴力能秒解？</h3>
+  <p>9 个格子，每个最多按 1 次，总共只有 2⁹ = <strong>512</strong> 种按法。计算机遍历所有组合只需微秒级时间，所以"暴力枚举"就是最优解法。</p>
+
+  <h3>线性代数视角</h3>
+  <p>这个问题本质上是一个 <strong>GF(2) 上的线性方程组</strong>（模 2 运算）：</p>
+  <ul>
+    <li>每个格子的状态是一个 0/1 变量</li>
+    <li>每次按下相当于对某些变量做 XOR（异或）</li>
+    <li>目标是找到一组操作，使得最终所有变量为 0</li>
+  </ul>
+  <p>用矩阵表示：<code>Ax = b (mod 2)</code>，其中 A 是 9×9 的影响矩阵，b 是初始状态向量。</p>
+
+  <h3>是否有解？</h3>
+  <div class="tip"><strong>任何初始状态都有解。</strong>影响矩阵的秩为 9（满秩），所以对于任意初始状态，都存在唯一解。</div>
+
+  <!-- ===== 3. 必胜策略 ===== -->
+  <h2>三、必胜策略</h2>
+
+  <h3>策略一：直接用求解器</h3>
+  <p>最简单的方法 —— 用我们的 <a href="flip-solver.html" style="color:var(--accent)">在线求解器</a>，输入初始状态，一键出解。</p>
+
+  <h3>策略二：手动解题技巧</h3>
+  <p>如果你想自己解题，可以用<strong>逐行消除法</strong>：</p>
+  <ol>
+    <li><strong>先处理第一行：</strong>通过按第二行的格子，把第一行全部消成 0</li>
+    <li><strong>再处理第二行：</strong>通过按第三行的格子，把第二行全部消成 0</li>
+    <li><strong>最后检查第三行：</strong>如果第三行也是全 0，就解开了</li>
+  </ol>
+
+  <div class="warn">注意：这个方法在标准 3×3 灯泡游戏中<strong>不保证</strong>所有情况都能成功（取决于影响规则的具体定义）。对于我们的规则，还是推荐用求解器。</div>
+
+  <h3>策略三：记住常见模式</h3>
+  <p>一些常见的对称模式和对应的解法：</p>
+
+  <div class="grid-row">
+    <div class="grid-group">
+      <div class="grid-demo">
+        <div class="gcell on">1</div><div class="gcell off">0</div><div class="gcell on">1</div>
+        <div class="gcell off">0</div><div class="gcell off">0</div><div class="gcell off">0</div>
+        <div class="gcell on">1</div><div class="gcell off">0</div><div class="gcell on">1</div>
+      </div>
+      <div class="grid-label">四角亮</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="grid-group">
+      <div class="grid-demo">
+        <div class="gcell highlight off">0</div><div class="gcell off">0</div><div class="gcell highlight off">0</div>
+        <div class="gcell off">0</div><div class="gcell highlight on">1</div><div class="gcell off">0</div>
+        <div class="gcell highlight off">0</div><div class="gcell off">0</div><div class="gcell highlight off">0</div>
+      </div>
+      <div class="grid-label">按 5 号</div>
+    </div>
+  </div>
+
+  <div class="grid-row">
+    <div class="grid-group">
+      <div class="grid-demo">
+        <div class="gcell on">1</div><div class="gcell on">1</div><div class="gcell on">1</div>
+        <div class="gcell off">0</div><div class="gcell off">0</div><div class="gcell off">0</div>
+        <div class="gcell off">0</div><div class="gcell off">0</div><div class="gcell off">0</div>
+      </div>
+      <div class="grid-label">顶行全亮</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="grid-group">
+      <div class="grid-demo">
+        <div class="gcell off">0</div><div class="gcell highlight on">1</div><div class="gcell off">0</div>
+        <div class="gcell highlight on">1</div><div class="gcell highlight on">1</div><div class="gcell highlight on">1</div>
+        <div class="gcell off">0</div><div class="gcell off">0</div><div class="gcell off">0</div>
+      </div>
+      <div class="grid-label">按 4, 5, 6</div>
+    </div>
+  </div>
+
+  <!-- ===== 4. 所有 512 种状态 ===== -->
+  <h2>四、解的统计</h2>
+  <table>
+    <tr><th>需要按的格子数</th><th>状态数量</th><th>占比</th></tr>
+    <tr><td>0（已经是全 0）</td><td>1</td><td>0.2%</td></tr>
+    <tr><td>1</td><td>9</td><td>1.8%</td></tr>
+    <tr><td>2</td><td>36</td><td>7.0%</td></tr>
+    <tr><td>3</td><td>84</td><td>16.4%</td></tr>
+    <tr><td>4</td><td>126</td><td>24.6%</td></tr>
+    <tr><td>5</td><td>126</td><td>24.6%</td></tr>
+    <tr><td>6</td><td>84</td><td>16.4%</td></tr>
+    <tr><td>7</td><td>36</td><td>7.0%</td></tr>
+    <tr><td>8</td><td>9</td><td>1.8%</td></tr>
+    <tr><td>9（全按）</td><td>1</td><td>0.2%</td></tr>
+  </table>
+  <p>可以看到，大多数情况（约 66%）需要按 3~5 个格子就能解开。最难的情况也只需要按遍所有 9 个格子。</p>
+
+  <!-- ===== 5. 变体 ===== -->
+  <h2>五、游戏变体</h2>
+  <p>九宫格翻转游戏有很多变体，核心思路相同：</p>
+  <ul>
+    <li><strong>5×5 灯泡游戏：</strong>更大的棋盘，状态空间 2²⁵ ≈ 3300 万，需要高斯消元法</li>
+    <li><strong>环形变体：</strong>边缘的格子会绕到另一边</li>
+    <li><strong>随机初始状态：</strong>从全 0 开始随机按若干次生成</li>
+    <li><strong>最少步数挑战：</strong>在给定初始状态下找到最少按法</li>
+  </ul>
+
+  <div class="tip">3×3 是最适合入门的大小 —— 足够有趣，又可以用暴力法秒解。想挑战更大的棋盘，可以学习<strong>高斯消元法</strong>（线性代数）。</div>
+
+  <!-- ===== 6. 资源 ===== -->
+  <h2>六、延伸阅读</h2>
+  <ul>
+    <li>维基百科：<a href="https://en.wikipedia.org/wiki/Lights_Out_(game)" style="color:var(--accent)">Lights Out (game)</a></li>
+    <li>数学原理：<a href="https://en.wikipedia.org/wiki/Gaussian_elimination" style="color:var(--accent)">Gaussian Elimination</a></li>
+    <li>在线玩：<a href="https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/pearl.html" style="color:var(--accent)">Simon Tatham's Puzzles</a></li>
+  </ul>
+
+  <footer>
+    <a href="index.html">← 返回工具箱</a> · <a href="flip-solver.html">打开求解器</a> · <a href="https://github.com/yang316">yang316</a>
+  </footer>
+
+</div>
+</body>
+</html>

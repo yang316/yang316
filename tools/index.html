@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧰 cola's 小工具箱</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-subtle: rgba(88,166,255,0.12);
+    --green: #3fb950;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "SF Pro Text", "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 36px;
+  }
+
+  /* 卡片网格 */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .card:hover {
+    background: var(--surface-hover);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+  .card-icon {
+    font-size: 32px;
+    line-height: 1;
+  }
+  .card-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .card-tag {
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    width: fit-content;
+  }
+
+  /* 分隔 */
+  .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* 攻略列表 */
+  .guide-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .guide-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .guide-item:hover {
+    background: var(--surface-hover);
+    border-color: var(--accent);
+  }
+  .guide-emoji { font-size: 24px; flex-shrink: 0; }
+  .guide-info { flex: 1; }
+  .guide-name { font-size: 15px; font-weight: 600; }
+  .guide-desc { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+  .guide-arrow { color: var(--text-muted); font-size: 18px; }
+
+  /* 底部 */
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    body { padding: 20px 16px; }
+    h1 { font-size: 22px; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>🧰 cola's 小工具箱</h1>
+  <p class="subtitle">一些实用的小工具和游戏攻略</p>
+
+  <div class="cards">
+    <a class="card" href="flip-solver.html">
+      <div class="card-icon">🔲</div>
+      <div class="card-title">九宫格翻转游戏求解器</div>
+      <div class="card-desc">输入初始状态，一键求解并演示翻转步骤</div>
+      <div class="card-tag">解谜工具</div>
+    </a>
+    <!-- 以后加新工具在这里复制 card -->
+  </div>
+
+  <h2 class="section-title">📖 游戏攻略</h2>
+  <div class="guide-list">
+    <a class="guide-item" href="flip-guide.html">
+      <span class="guide-emoji">🎯</span>
+      <div class="guide-info">
+        <div class="guide-name">九宫格翻转游戏 — 完全攻略</div>
+        <div class="guide-desc">规则详解、数学原理、必胜策略、所有关卡解法</div>
+      </div>
+      <span class="guide-arrow">→</span>
+    </a>
+    <!-- 以后加新攻略在这里复制 guide-item -->
+  </div>
+
+  <footer>
+    <a href="https://github.com/yang316">yang316</a> · 遇到 bug 可以提 issue
+  </footer>
+
+</div>
+</body>
+</html>
