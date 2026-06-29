@@ -4,6 +4,12 @@
 
 ---
 
+#### 🔧 小工具
+
+- [九宫格翻转游戏求解器](https://yang316.github.io/yang316/tools/flip-solver.html)
+
+---
+
 #### 📊 GitHub Stats
 
 <p>

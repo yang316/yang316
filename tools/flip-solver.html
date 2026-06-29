@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>九宫格翻转游戏求解器</title>
+<style>
+  body { font-family: -apple-system, "Microsoft YaHei", sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+  h1 { text-align: center; }
+  .grid { display: grid; grid-template-columns: repeat(3, 90px); gap: 12px; justify-content: center; margin-bottom: 20px; }
+  .cell { width: 90px; height: 90px; border: 3px solid #555; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; user-select: none; font-size: 32px; font-weight: bold; transition: background 0.2s; position: relative; }
+  .cell .num { font-size: 13px; color: #777; position: absolute; top: 5px; left: 8px; }
+  .cell.on { background-color: #ffd966; }
+  .cell.off { background-color: #f0f0f0; }
+  .btn-group { text-align: center; margin-bottom: 20px; }
+  button { padding: 10px 22px; font-size: 16px; margin: 0 8px; cursor: pointer; border: none; border-radius: 5px; background: #4a90e2; color: white; }
+  button:hover { background: #357abd; }
+  #result { margin-top: 20px; }
+  .step { margin-bottom: 15px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa; }
+  .mini-grid { display: grid; grid-template-columns: repeat(3, 45px); gap: 6px; margin-top: 8px; }
+  .mini-cell { width: 45px; height: 45px; border: 1px solid #aaa; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; }
+  .mini-cell.on { background-color: #ffd966; }
+  .mini-cell.off { background-color: #fff; }
+</style>
+</head>
+<body>
+<h1>🔲 九宫格翻转游戏求解器</h1>
+<p style="text-align:center;">点击下方格子切换 0/1 设定初始状态，然后点击“求解并演示过程”。</p>
+
+<div class="btn-group">
+  <button onclick="solve()">求解并演示过程</button>
+  <button onclick="resetGrid()" style="background:#888;">全部清零</button>
+</div>
+
+<div class="grid" id="grid"></div>
+<div id="result"></div>
+
+<script>
+// 每个格子按下时会影响的格子编号（包含自己）
+const neighbors = {
+  1: [1,2,4],        2: [1,2,3,5],      3: [2,3,6],
+  4: [1,4,5,7],      5: [2,4,5,6,8],    6: [3,5,6,9],
+  7: [4,7,8],        8: [5,7,8,9],      9: [6,8,9]
+};
+
+const gridEl = document.getElementById('grid');
+let state = new Array(10).fill(0); // 索引1-9
+
+// 初始化九宫格UI（按真实小键盘布局：7,8,9在上，1,2,3在下）
+const layout = [7,8,9,4,5,6,1,2,3];
+layout.forEach(i => {
+  const cell = document.createElement('div');
+  cell.className = 'cell off';
+  cell.innerHTML = `<span class="num">${i}号</span><span class="val">0</span>`;
+  cell.onclick = () => {
+    state[i] = 1 - state[i];
+    cell.querySelector('.val').textContent = state[i];
+    cell.className = 'cell ' + (state[i] ? 'on' : 'off');
+  };
+  gridEl.appendChild(cell);
+});
+
+function resetGrid() {
+  for (let i = 1; i <= 9; i++) state[i] = 0;
+  Array.from(gridEl.children).forEach((c, idx) => {
+    const i = layout[idx];
+    c.querySelector('.val').textContent = '0';
+    c.className = 'cell off';
+  });
+  document.getElementById('result').innerHTML = '';
+}
+
+// 模拟按下某些格子后的结果
+function applyPress(s, presses) {
+  let res = [...s];
+  for (let i = 1; i <= 9; i++) {
+    if (presses[i]) {
+      for (let n of neighbors[i]) res[n] ^= 1;
+    }
+  }
+  return res;
+}
+
+// 暴力枚举求解（共512种情况，瞬间完成）
+function solve() {
+  let presses = new Array(10).fill(0);
+  let found = false;
+  for (let mask = 0; mask < 512; mask++) {
+    for (let i = 1; i <= 9; i++) presses[i] = (mask >> (i-1)) & 1;
+    let finalState = applyPress(state, presses);
+    if (finalState.every(v => v === 0)) { found = true; break; }
+  }
+
+  const resultEl = document.getElementById('result');
+  resultEl.innerHTML = '';
+  if (!found) { resultEl.innerHTML = '<p>无解！</p>'; return; }
+
+  let pressList = [];
+  for (let i = 1; i <= 9; i++) if (presses[i]) pressList.push(i);
+
+  let html = `<h2>📋 解答结果</h2>`;
+  if (pressList.length === 0) {
+    html += `<p>当前已经是全0，不需要按任何按钮。</p>`;
+  } else {
+    html += `<p>需要按下的格子：<strong>${pressList.map(i=>i+'号').join('、')}</strong>（顺序无关，以下按从小到大演示）</p>`;
+  }
+
+  let currentState = [...state];
+  html += renderMiniGrid(currentState, '🟢 初始状态');
+  for (let p of pressList) {
+    for (let n of neighbors[p]) currentState[n] ^= 1;
+    html += `<div class="step"><strong>👉 按下 ${p} 号后</strong>${renderMiniGrid(currentState)}</div>`;
+  }
+  resultEl.innerHTML = html;
+}
+
+// 渲染小型九宫格状态图
+function renderMiniGrid(s, label) {
+  let html = `<div style="margin-top:8px;">${label}</div><div class="mini-grid">`;
+  for (let i of layout) {
+    html += `<div class="mini-cell ${s[i]?'on':'off'}">${s[i]}</div>`;
+  }
+  html += `</div>`;
+  return html;
+}
+</script>
+</body>
+</html>
