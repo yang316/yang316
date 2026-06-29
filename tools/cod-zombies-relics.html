@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荒城鬼影 — 遗物攻略</title>
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --surface2: #1c2333;
+    --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+    --accent: #58a6ff; --accent2: rgba(88,166,255,0.12);
+    --green: #3fb950; --green2: rgba(63,185,80,0.12);
+    --yellow: #e3b341; --yellow2: rgba(227,179,65,0.12);
+    --red: #f85149; --red2: rgba(248,81,73,0.12);
+    --purple: #bc8cff; --purple2: rgba(188,140,255,0.12);
+    --orange: #f0883e; --orange2: rgba(240,136,62,0.12);
+    --radius: 14px; --radius-sm: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "SF Pro Display", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 24px 16px 60px; }
+  .container { max-width: 820px; margin: 0 auto; }
+  .back { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); text-decoration: none; font-size: 13px; margin-bottom: 20px; }
+  .back:hover { color: var(--accent); }
+
+  .hero { text-align: center; margin-bottom: 32px; padding: 28px 20px; background: linear-gradient(135deg, #1a1420 0%, #0d1117 100%); border: 1px solid var(--border); border-radius: var(--radius); }
+  .hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+  .hero .sub { color: var(--muted); font-size: 14px; }
+  .hero .tags { display: flex; gap: 8px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+  .tag { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
+  .tag-grim { background: var(--green2); color: var(--green); }
+  .tag-sinister { background: var(--yellow2); color: var(--yellow); }
+  .tag-wicked { background: var(--red2); color: var(--red); }
+  .tag-secret { background: var(--purple2); color: var(--purple); }
+
+  /* 遗物概览表 */
+  .overview { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 28px; overflow-x: auto; }
+  .overview h3 { font-size: 16px; margin-bottom: 14px; }
+  .relic-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .relic-table th, .relic-table td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+  .relic-table th { background: var(--surface2); font-weight: 600; font-size: 13px; color: var(--muted); }
+  .relic-table td:first-child { white-space: nowrap; font-weight: 600; }
+  .tier-badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+  .tier-grim { background: var(--green2); color: var(--green); }
+  .tier-sinister { background: var(--yellow2); color: var(--yellow); }
+  .tier-wicked { background: var(--red2); color: var(--red); }
+
+  /* 详细步骤 */
+  .section { margin-bottom: 28px; scroll-margin-top: 20px; }
+  .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .section-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .section-title { font-size: 18px; font-weight: 700; }
+  .section-sub { font-size: 12px; color: var(--muted); }
+
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+  .step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; }
+  .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .step-num { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .step-title { font-size: 14px; font-weight: 600; }
+  .step-loc { font-size: 11px; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 4px; margin-left: auto; }
+  .step p, .step li { font-size: 13px; line-height: 1.7; }
+  .step ul { padding-left: 16px; margin: 4px 0; }
+  .step li { margin-bottom: 3px; }
+  .step .warn { background: var(--yellow2); border: 1px solid rgba(227,179,65,0.2); border-radius: 8px; padding: 8px 12px; margin-top: 8px; font-size: 12px; }
+  .step .warn::before { content: "⚠️ "; }
+  .step .tip { background: var(--accent2); border: 1px solid rgba(88,166,255,0.2); border-radius: 8px; padding: 8px 12px; margin-top: 8px; font-size: 12px; }
+  .step .tip::before { content: "💡 "; }
+  .step .effect { background: var(--green2); border: 1px solid rgba(63,185,80,0.2); border-radius: 8px; padding: 8px 12px; margin-top: 8px; font-size: 12px; font-weight: 600; }
+  .step .effect::before { content: "✨ 遗物效果："; }
+
+  .pending { background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-sm); padding: 20px; text-align: center; color: var(--muted); font-size: 14px; }
+  .pending .icon { font-size: 28px; margin-bottom: 8px; opacity: 0.5; }
+
+  .secret-box { background: linear-gradient(135deg, #1a1428 0%, #0d1117 100%); border: 1px solid var(--purple); border-radius: var(--radius); padding: 20px 24px; margin: 28px 0; }
+  .secret-box h3 { color: var(--purple); font-size: 16px; margin-bottom: 8px; }
+  .secret-box p { font-size: 14px; color: var(--text); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+  .footer { text-align: center; color: var(--muted); font-size: 13px; padding-top: 20px; border-top: 1px solid var(--border); margin-top: 36px; }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 21px; }
+    .section-title { font-size: 16px; }
+    .relic-table { font-size: 12px; }
+    .relic-table th, .relic-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="index.html" class="back">← 返回工具箱</a>
+
+<div class="hero">
+  <h1>🔮 荒城鬼影 — 遗物攻略</h1>
+  <p class="sub">Kowakujō · 诅咒遗物解锁指南</p>
+  <div class="tags">
+    <span class="tag tag-grim">Grim ×2</span>
+    <span class="tag tag-sinister">Sinister ×2</span>
+    <span class="tag tag-wicked">Wicked ×2</span>
+    <span class="tag tag-secret">秘密迷彩</span>
+  </div>
+</div>
+
+<!-- 概览表 -->
+<div class="overview">
+  <h3>📋 遗物总览</h3>
+  <table class="relic-table">
+    <tr>
+      <th>遗物</th><th>等级</th><th>效果</th><th>触发条件</th>
+    </tr>
+    <tr>
+      <td>🎵 留声机</td>
+      <td><span class="tier-badge tier-grim">Grim</span></td>
+      <td>子弹伤害↑，每发消耗2颗弹药</td>
+      <td>完成主线彩蛋 + 敲鼓解谜</td>
+    </tr>
+    <tr>
+      <td>🪨 德鲁伊石</td>
+      <td><span class="tier-badge tier-grim">Grim</span></td>
+      <td>无倒地条，自起瞬间复活</td>
+      <td>待发现</td>
+    </tr>
+    <tr>
+      <td>⚡ 瓦尔基里头盔</td>
+      <td><span class="tier-badge tier-sinister">Sinister</span></td>
+      <td>停留区域产生电场伤害你</td>
+      <td>待发现</td>
+    </tr>
+    <tr>
+      <td>🎞️ 胶卷</td>
+      <td><span class="tier-badge tier-sinister">Sinister</span></td>
+      <td>只能携带一把PAP武器</td>
+      <td>10把不同武器PAP + 连杀试炼</td>
+    </tr>
+    <tr>
+      <td>🥚 龙蛋</td>
+      <td><span class="tier-badge tier-wicked">Wicked</span></td>
+      <td>精英/特殊僵尸刷新随机化</td>
+      <td>待发现</td>
+    </tr>
+    <tr>
+      <td>🤖 人偶炮塔</td>
+      <td><span class="tier-badge tier-wicked">Wicked</span></td>
+      <td>无护甲，只能通过虚空购买金甲</td>
+      <td>第60波 + 不失败攻击波 + 无回血试炼</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ===== 留声机 ===== -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--green2)">🎵</div>
+    <div>
+      <div class="section-title">留声机 Gramophone</div>
+      <div class="section-sub"><span class="tier-badge tier-grim">Grim</span></div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="effect">子弹伤害增加，但每发消耗2颗弹药</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num" style="background:var(--green2);color:var(--green)">前</span>
+        <span class="step-title">前置条件</span>
+      </div>
+      <p>必须先在普通模式或诅咒模式中 <strong>完成一次主线彩蛋</strong></p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num" style="background:var(--green2);color:var(--green)">1</span>
+        <span class="step-title">收集鼓槌（2个）</span>
+      </div>
+      <ul>
+        <li><strong>位置1</strong>：城门楼 (Gatehouse)</li>
+        <li><strong>位置2</strong>：工房 (Workshop)</li>
+      </ul>
+      <div class="tip">可以在任意诅咒等级进行，任意回合均可开始</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num" style="background:var(--green2);color:var(--green)">2</span>
+        <span class="step-title">敲鼓解谜（3轮）</span>
+        <span class="step-loc">厨房楼梯旁</span>
+      </div>
+      <ul>
+        <li>从花园进入厨房建筑，楼梯旁有两面鼓</li>
+        <li>互动发光的鼓，开始节奏序列</li>
+        <li>用近战按序列敲鼓，共 <strong>3 轮</strong></li>
+        <li>第1、2轮较短，第3轮较长</li>
+      </ul>
+      <div class="warn">第3轮序列较长，建议录屏后回放对照敲</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num" style="background:var(--green2);color:var(--green)">3</span>
+        <span class="step-title">完成试炼</span>
+      </div>
+      <ul>
+        <li>传送门出现，挑战：<strong>只能用狙击枪造成伤害</strong></li>
+        <li>试炼中有 <strong>2波HVT</strong></li>
+        <li>完成后传送回来，获得留声机遗物</li>
+      </ul>
+      <div class="tip">提前PAP狙击枪（如Ion），可带 Insta Kill 泡泡糖辅助HVT波</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 胶卷 ===== -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--yellow2)">🎞️</div>
+    <div>
+      <div class="section-title">胶卷 Film Reel</div>
+      <div class="section-sub"><span class="tier-badge tier-sinister">Sinister</span></div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="effect">只能携带一把 Pack-a-Punch 武器</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num" style="background:var(--yellow2);color:#8b6914">1</span>
+        <span class="step-title">触发条件</span>
+      </div>
+      <ul>
+        <li>需要 <strong>诅咒1级</strong> 或更高难度</li>
+        <li><strong>不要装备 Metrescher 遗物</strong>（需要收集废料）</li>
+        <li>10把不同武器各PAP一次（约30-40波可完成）</li>
+        <li>推荐带 Death Drop 泡泡糖（掉落废料）</li>
+      </ul>
+      <div class="tip">Mule Kick 的 Pack Mule 增幅也计入，可PAP一把武器时同时计另一把</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num" style="background:var(--yellow2);color:#8b6914">2</span>
+        <span class="step-title">试炼 — 连杀奖励击杀</span>
+        <span class="step-loc">茶花园</span>
+      </div>
+      <ul>
+        <li>传送门在茶花园，共 <strong>5波</strong>，每波需用不同连杀奖励</li>
+        <li>游戏只给一个免费连杀，其余需用废料购买</li>
+        <li>波次顺序：狗 → LD BR → RC-XD → HKD → 铁核</li>
+        <li>建议在熔岩旁工作台附近卡位</li>
+      </ul>
+      <div class="warn">提前囤积大量废料！试炼中需要反复购买连杀奖励</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 人偶炮塔 ===== -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--red2)">🤖</div>
+    <div>
+      <div class="section-title">人偶炮塔 Mannequin Turret</div>
+      <div class="section-sub"><span class="tier-badge tier-wicked">Wicked</span></div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="effect">无护甲，只能通过虚空墙购买金甲</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num" style="background:var(--red2);color:var(--red)">1</span>
+        <span class="step-title">触发条件 — 无失败攻击波到达60波</span>
+      </div>
+      <ul>
+        <li>需要 <strong>诅咒2级</strong> 或更高（推荐3级拿PAP4）</li>
+        <li>到达 <strong>第60波</strong></li>
+        <li>全程 <strong>不失败任何攻击波</strong>（龙袭击雕像/旗帜的回合）</li>
+        <li>雕像可以被龙和僵尸摧毁，但 <strong>旗帜不能被僵尸夺走</strong></li>
+      </ul>
+      <div class="tip">59→60波翻转时会听到 Mr. Peeks 笑声，表示触发成功</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num" style="background:var(--red2);color:var(--red)">2</span>
+        <span class="step-title">试炼 — 无回血</span>
+        <span class="step-loc">军议室楼梯前</span>
+      </div>
+      <ul>
+        <li>传送门在军议室（Pack-a-Punch楼梯前）</li>
+        <li><strong>无生命回复</strong>，每波结束后才回血</li>
+        <li>共 <strong>6波</strong>，含 <strong>2波HVT</strong></li>
+        <li>可用 Stim Shot 回血，但推荐用 Cymbal Monkey</li>
+      </ul>
+      <div class="tip">推荐在屋顶用毒蔓 (Toxic Growth) + 奇迹武器卡点，大部分僵尸从前方来</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== 未解锁遗物 ===== -->
+<div class="section">
+  <div class="section-head">
+    <div class="section-icon" style="background:var(--muted); opacity:0.5">❓</div>
+    <div>
+      <div class="section-title">待发现的遗物</div>
+      <div class="section-sub">社区尚未解开的遗物</div>
+    </div>
+  </div>
+
+  <div class="pending">
+    <div class="icon">🔒</div>
+    <p><strong>🪨 德鲁伊石</strong> (Grim) — 效果：无倒地条，自起瞬间复活</p>
+    <p style="margin-top:8px"><strong>⚡ 瓦尔基里头盔</strong> (Sinister) — 效果：停留区域产生电场伤害</p>
+    <p style="margin-top:8px"><strong>🥚 龙蛋</strong> (Wicked) — 效果：精英/特殊僵尸刷新随机化</p>
+  </div>
+</div>
+
+<!-- 秘密迷彩 -->
+<div class="secret-box">
+  <h3>🎨 秘密迷彩奖励</h3>
+  <p>收集 <strong>全部 30 个遗物</strong>（所有地图）可解锁 <strong>秘密迷彩</strong>。目前迷彩外观尚未公开。这可能是超级彩蛋的一部分——需要完成所有地图主线 + 收集全部遗物才能获得最终奖励。</p>
+</div>
+
+<div class="footer">
+  <p>视频来源：<a href="https://www.youtube.com/@Doughnuts">YouTube</a> · 攻略由 AI 辅助生成</p>
+  <p><a href="index.html">← 返回工具箱</a> · <a href="cod-zombies-guide.html">主线彩蛋攻略</a></p>
+</div>
+
+</div>
+</body>
+</html>
