@@ -698,22 +698,32 @@
     <div class="step">
       <div class="step-header">
         <span class="step-num purple">2</span>
-        <span class="step-title">确定第3幅画 — 毒物推理</span>
-        <span class="step-loc">查看墙上的医嘱和毒物表</span>
+        <span class="step-title">确定第3幅画 — 毒物推理（排除法）</span>
+        <span class="step-loc">查看墙上的医嘱 + 陷阱灵魂</span>
       </div>
-      <p>先看 <strong>医嘱</strong>（墙上左侧纸条）确认死因，再结合 <strong>共犯者</strong> 确定毒物：</p>
 
+      <p style="font-weight:600;margin-bottom:8px;">第一步：看医嘱症状 → 缩小到 2 种毒物</p>
       <table class="items-table">
-        <tr><th>共犯者</th><th>死因</th><th>→ 毒物</th></tr>
-        <tr><td>高贵的</td><td>🤮 Emesis（呕吐）</td><td>🐡 河豚 (Pufferfish)</td></tr>
-        <tr><td>高贵的</td><td>🌿 Noxious Plant（有毒植物）</td><td>🌸 乌头花 (Monkshood)</td></tr>
-        <tr><td>园丁</td><td>🤮 Noxious Food Emesis</td><td>🍑 梅子核 (Plum Pit)</td></tr>
-        <tr><td>园丁</td><td>🦴 Paralysis（瘫痪）</td><td>🌸 乌头花 (Monkshood)</td></tr>
-        <tr><td>商人</td><td>🌿 Noxious Plant</td><td>🍑 梅子核 (Plum Pit)</td></tr>
-        <tr><td>商人</td><td>🤮 Emesis（呕吐）</td><td>🐡 河豚 (Pufferfish)</td></tr>
+        <tr><th>医嘱症状</th><th>→ 可能的毒物（二选一）</th></tr>
+        <tr><td>🌿 Plant（植物）</td><td>🌸 乌头花 <strong>或</strong> 🍑 梅子核</td></tr>
+        <tr><td>🤮 Emesis（呕吐）</td><td>🍑 梅子核 <strong>或</strong> 🐡 河豚</td></tr>
+        <tr><td>🦴 Paralysis（麻痹）</td><td>🌸 乌头花 <strong>或</strong> 🐡 河豚</td></tr>
+      </table>
+      <p style="font-size:13px;color:var(--muted);margin:4px 0 12px;">每个症状排除一种毒物，剩余两种二选一</p>
+
+      <p style="font-weight:600;margin-bottom:8px;">第二步：确认共犯者 → 排除一个 → 答案确定</p>
+      <table class="items-table">
+        <tr><th>共犯者</th><th>排除的毒物</th></tr>
+        <tr><td>🎩 贵族/高贵的</td><td>≠ 🍑 梅子核</td></tr>
+        <tr><td>🧮 商人</td><td>≠ 🌸 乌头花</td></tr>
+        <tr><td>✂️ 园丁</td><td>≠ 🐡 河豚</td></tr>
       </table>
 
-      <div class="warn">马头花和河豚都带瘫痪效果容易误判！需将河豚移到马头花位置 → 过波 → 再次与香火互动确认</div>
+      <p style="margin:10px 0;font-weight:600;">💡 举个例子：</p>
+      <p style="font-size:14px;">医嘱写 <strong>Paralysis（麻痹）</strong> → 可能是乌头花或河豚<br>
+      陷阱灵魂提到 <strong>园丁</strong> → 排除河豚 → 答案：<strong>🌸 乌头花</strong></p>
+
+      <div class="warn">图片来自 B站 @阳炎好孩子</div>
     </div>
 
     <div class="step">
