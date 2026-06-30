@@ -681,25 +681,40 @@
     <div class="step">
       <div class="step-header">
         <span class="step-num purple">1</span>
-        <span class="step-title">禅房证据板 — 五幅画匹配</span>
+        <span class="step-title">五幅画推理总览</span>
         <span class="step-loc">禅房</span>
       </div>
-      <p>将证据放到五幅画前面的指定位置：</p>
+      <p>五幅画每幅需要放一件证据道具，按照以下逻辑逐一确定：</p>
       <table class="items-table">
-        <tr><th>画像位置</th><th>道具</th><th>确定方法</th></tr>
-        <tr><td>第1幅</td><td>梳子 🪥</td><td>固定不变</td></tr>
-        <tr><td>第2幅</td><td>共犯者物品</td><td>园丁剪刀 / 商人算盘 / 高贵者帽子（由陷阱灵魂决定）</td></tr>
-        <tr><td>第3幅</td><td>毒物（见下方）</td><td>由共犯者 + 死因共同决定（见步骤2）</td></tr>
-        <tr><td>第4幅</td><td>地点物品</td><td>由画像背景图案决定（鱼=搅拌器 / 山=马 / 鸟=毛笔）</td></tr>
-        <tr><td>第5幅</td><td>金币徽章 🪙</td><td>固定不变（动机画像时钟获得）</td></tr>
+        <tr><th>画像</th><th>内容</th><th>道具</th><th>确定方法</th></tr>
+        <tr><td>第1幅</td><td>容疑者</td><td>🪥 木梳</td><td><strong>固定不变</strong></td></tr>
+        <tr><td>第2幅</td><td>共犯者</td><td>对应物品</td><td>陷阱灵魂告诉你谁是共犯者</td></tr>
+        <tr><td>第3幅</td><td>毒</td><td>对应毒物</td><td>症状 + 共犯者 → 排除法确定</td></tr>
+        <tr><td>第4幅</td><td>地点</td><td>对应物品</td><td>看画像背景图案</td></tr>
+        <tr><td>第5幅</td><td>动机</td><td>🪙 金币徽章</td><td><strong>固定不变</strong></td></tr>
       </table>
     </div>
 
     <div class="step">
       <div class="step-header">
         <span class="step-num purple">2</span>
-        <span class="step-title">确定第3幅画 — 毒物推理（排除法）</span>
-        <span class="step-loc">查看墙上的医嘱 + 陷阱灵魂</span>
+        <span class="step-title">确定第2幅画 — 共犯者</span>
+        <span class="step-loc">地图四处陷阱</span>
+      </div>
+      <p>在四处陷阱附近击杀足够僵尸后，会出现一个「摸鱼的灵魂卫兵」，互动后他会告诉你共犯者是谁。三处无效，只有一处会提到人名：</p>
+      <table class="items-table">
+        <tr><th>灵魂提到</th><th>→ 第2幅画放</th><th>→ 第3幅画排除</th></tr>
+        <tr><td>🎩 贵族/高贵者</td><td>贵族帽子</td><td>≠ 🍑 梅子核</td></tr>
+        <tr><td>🧮 商人</td><td>商人算盘</td><td>≠ 🌸 乌头花</td></tr>
+        <tr><td>✂️ 园丁</td><td>园丁剪刀</td><td>≠ 🐡 河豚</td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">3</span>
+        <span class="step-title">确定第3幅画 — 毒物（排除法）</span>
+        <span class="step-loc">查看墙上的医嘱</span>
       </div>
 
       <p style="font-weight:600;margin-bottom:8px;">第一步：看医嘱症状 → 缩小到 2 种毒物</p>
@@ -709,17 +724,8 @@
         <tr><td>🤮 Emesis（呕吐）</td><td>🍑 梅子核 <strong>或</strong> 🐡 河豚</td></tr>
         <tr><td>🦴 Paralysis（麻痹）</td><td>🌸 乌头花 <strong>或</strong> 🐡 河豚</td></tr>
       </table>
-      <p style="font-size:13px;color:var(--muted);margin:4px 0 12px;">每个症状排除一种毒物，剩余两种二选一</p>
 
-      <p style="font-weight:600;margin-bottom:8px;">第二步：确认共犯者 → 排除一个 → 答案确定</p>
-      <table class="items-table">
-        <tr><th>共犯者</th><th>排除的毒物</th></tr>
-        <tr><td>🎩 贵族/高贵的</td><td>≠ 🍑 梅子核</td></tr>
-        <tr><td>🧮 商人</td><td>≠ 🌸 乌头花</td></tr>
-        <tr><td>✂️ 园丁</td><td>≠ 🐡 河豚</td></tr>
-      </table>
-
-      <p style="margin:10px 0;font-weight:600;">💡 所有组合速查：</p>
+      <p style="font-weight:600;margin:12px 0 8px;">第二步：结合共犯者 → 排除一个 → 确定答案</p>
       <table class="items-table">
         <tr><th>症状</th><th>共犯者</th><th>→ 毒物</th></tr>
         <tr><td>🌿 植物</td><td>🎩 贵族</td><td><strong>🌸 乌头花</strong></td></tr>
@@ -729,12 +735,35 @@
         <tr><td>🦴 麻痹</td><td>🧮 商人</td><td><strong>🐡 河豚</strong></td></tr>
         <tr><td>🦴 麻痹</td><td>✂️ 园丁</td><td><strong>🌸 乌头花</strong></td></tr>
       </table>
-      <div class="warn">图片来自 B站 @阳炎好孩子</div>
+      <div class="warn">图片来源：B站 @阳炎好孩子</div>
     </div>
 
     <div class="step">
       <div class="step-header">
-        <span class="step-num purple">3</span>
+        <span class="step-num purple">4</span>
+        <span class="step-title">确定第4幅画 — 地点</span>
+        <span class="step-loc">查看画像左侧背景</span>
+      </div>
+      <p>观察第4幅画像左侧背景中的图案，对应关系：</p>
+      <table class="items-table">
+        <tr><th>背景图案</th><th>→ 放置道具</th></tr>
+        <tr><td>🐟 鱼</td><td>🥄 茶筅（搅拌器）</td></tr>
+        <tr><td>⛰️ 山</td><td>🐴 马（马形摆件）</td></tr>
+        <tr><td>🐦 鸟</td><td>🖊️ 毛笔</td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">5</span>
+        <span class="step-title">确定第5幅画 — 动机</span>
+      </div>
+      <p><strong>固定</strong> 放「刻有家族徽章的金币」🪙，无需推理。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num purple">6</span>
         <span class="step-title">生肖转盘 — 最终锁定</span>
         <span class="step-loc">禅房金属转盘</span>
       </div>
@@ -769,23 +798,7 @@
 
     <div class="step">
       <div class="step-header">
-        <span class="step-num purple">4</span>
-        <span class="step-title">陷阱击杀与共犯者识别</span>
-        <span class="step-loc">地图四处陷阱</span>
-      </div>
-      <ul>
-        <li>开启地图内陷阱（蓝色发光装置），在陷阱激活期间击杀 <strong>15-20个僵尸</strong></li>
-        <li>击杀后在附近窗户寻找 <strong>面向错误的灵魂卫兵</strong>（紫黑色幽灵NPC）</li>
-        <li>互动灵魂卫兵，开启字幕听取台词</li>
-        <li>灵魂会提到共犯者：<strong>园丁 (Gardener) / 商人 (Merchant) / 高贵者 (Nobleman/Courtier)</strong></li>
-        <li>如果没有提到任何人，换一个陷阱重试（共4个陷阱，3个有效）</li>
-        <li>确认共犯者后，将对应物品放在第2幅画前</li>
-      </ul>
-    </div>
-
-    <div class="step">
-      <div class="step-header">
-        <span class="step-num purple">4</span>
+        <span class="step-num purple">7</span>
         <span class="step-title">跟随雾气 → 面具怪物战斗</span>
         <span class="step-loc">超猛改造处</span>
       </div>
@@ -794,7 +807,7 @@
 
     <div class="step">
       <div class="step-header">
-        <span class="step-num purple">5</span>
+        <span class="step-num purple">8</span>
         <span class="step-title">终极战准备</span>
         <span class="step-loc">中庭</span>
       </div>
@@ -808,7 +821,7 @@
 
     <div class="step">
       <div class="step-header">
-        <span class="step-num red">6</span>
+        <span class="step-num red">9</span>
         <span class="step-title">终极 BOSS 战</span>
         <span class="step-loc">荒城废墟</span>
       </div>
