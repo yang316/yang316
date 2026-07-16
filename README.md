@@ -1,6 +1,6 @@
 ### Hi there 👋
 
-<!-- HITOKOTO -->「所谓辉煌的人生，不过是欲望的囚徒。」—— 网络<!-- /HITOKOTO -->
+<!-- HITOKOTO -->「Yes, minister.」—— 是，大臣<!-- /HITOKOTO -->
 
 ---
 
