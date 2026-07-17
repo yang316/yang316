@@ -1,6 +1,6 @@
 ### Hi there 👋
 
-<!-- HITOKOTO -->「Yes, minister.」—— 是，大臣<!-- /HITOKOTO -->
+<!-- HITOKOTO -->「一个人若是没有热情，他将一事无成，而热情的基点正是责任心。」—— 名人名言<!-- /HITOKOTO -->
 
 ---
 
